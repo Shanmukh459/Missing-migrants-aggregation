@@ -19,4 +19,6 @@
 
 ## Screenshot
 
+![image](https://github.com/Shanmukh459/Missing-migrants-aggregation/assets/52078988/eedfdc58-0051-4e88-aaca-ff69706078c7)
 
+Happy Coding!
