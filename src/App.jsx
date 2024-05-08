@@ -1,5 +1,7 @@
 import { bin, extent, max, scaleLinear, scaleTime, sum, timeFormat, timeMonths } from "d3"
 import { useData } from "./useData"
+import { AxisLeft } from "./AxisLeft"
+import { AxisBottom } from "./AxisBottom"
 
 const height = 500
 const width = 960
@@ -26,6 +28,9 @@ function App() {
 
   const yValue = d => d['Total Dead and Missing']
   const yAxisLabel = 'Total Dead and Missing'
+
+  const xAxisLabelOffset = 50
+  const yAxisLabelOffset = 45
 
   const xAxisTickFormat = timeFormat('%m/%d/%Y')
 
@@ -54,36 +59,18 @@ function App() {
   return (
     <svg width={width} height={height}>
       <g transform={`translate(${margin.left}, ${margin.top})`}>
-        {xScale.ticks().map(tickValue => (
-          <g className="ticks" key={tickValue} transform={`translate(${xScale(tickValue)}, 0)`}>
-            <line y2={innerHeight} />
-            <text 
-              y={innerHeight+5}
-              textAnchor="middle"
-              dy="0.71em"
-            >{xAxisTickFormat(tickValue)}</text>
-          </g>
-        ))}
+        <AxisBottom xScale={xScale} innerHeight={innerHeight} tickFormat={xAxisTickFormat} />
         <text
           className="axis-label"
           x={innerWidth/2}
-          y={innerHeight+50}
+          y={innerHeight+xAxisLabelOffset}
           textAnchor="middle"
         >{xAxisLabel}</text>
-        {yScale.ticks().map(tickValue => (
-          <g className="ticks" key={tickValue} transform={`translate(0, ${yScale(tickValue)})`}>
-            <line x2={innerWidth} />
-            <text
-              textAnchor="end"
-              dy="0.32em"
-              x={-3}
-            >{tickValue}</text>
-          </g>
-        ))}
+        <AxisLeft yScale={yScale} innerWidth={innerWidth} />
         <text
           className="axis-label"
           textAnchor="middle"
-          transform={`translate(-50, ${innerHeight/2}) rotate(-90)`}
+          transform={`translate(${-yAxisLabelOffset}, ${innerHeight/2}) rotate(-90)`}
         >{yAxisLabel}</text>
         {
           binnedData.map((d, i) => (
