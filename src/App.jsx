@@ -1,4 +1,4 @@
-import { bin, extent, scaleLinear, scaleTime, sum, timeMonths } from "d3"
+import { bin, extent, max, scaleLinear, scaleTime, sum, timeMonths } from "d3"
 import { useData } from "./useData"
 
 const height = 500
@@ -43,11 +43,25 @@ function App() {
 
   console.log(binnedData)
 
-  // const yScale = scaleLinear()
-  //   .domain([0, sum(binnedData, d => d.)])
+  const yScale = scaleLinear()
+    .domain([0, max(binnedData, d => d.totalDeadAndMissing)])
+    .range([0, innerHeight])
+    .nice()
+
   return (
-    <svg>
-      <circle></circle>
+    <svg width={width} height={height}>
+      {
+        binnedData.map(d => (
+          <rect
+            x={xScale(d.x0)}
+            y={yScale(d.totalDeadAndMissing)}
+            width={xScale(d.x1) - xScale(d.x0)}
+            height={innerHeight - yScale(d.totalDeadAndMissing)}
+          >
+
+          </rect>
+        ))
+      }
     </svg>
   )
 }
