@@ -1,4 +1,4 @@
-import { bin, extent, max, scaleLinear, scaleTime, sum, timeMonths } from "d3"
+import { bin, extent, max, scaleLinear, scaleTime, sum, timeFormat, timeMonths } from "d3"
 import { useData } from "./useData"
 
 const height = 500
@@ -8,7 +8,7 @@ const margin = {
   top: 20,
   right: 20,
   bottom: 20,
-  left: 20
+  left: 80
 }
 
 function App() {
@@ -23,6 +23,8 @@ function App() {
 
   const xValue = d => d['Reported Date']
   const yValue = d => d['Total Dead and Missing']
+
+  const xAxisTickFormat = timeFormat('%m/%d/%Y')
 
   const xScale = scaleTime()
     .domain(extent(data, xValue))
@@ -43,24 +45,47 @@ function App() {
 
   const yScale = scaleLinear()
     .domain([0, max(binnedData, d => d.totalDeadAndMissing)])
-    .range([0, innerHeight])
+    .range([innerHeight, 0])
     .nice()
 
   return (
     <svg width={width} height={height}>
-      {
-        binnedData.map((d, i) => (
-          <rect
-            key={i}
-            x={xScale(d.x0)}
-            y={yScale(d.totalDeadAndMissing)}
-            width={xScale(d.x1) - xScale(d.x0)}
-            height={innerHeight - yScale(d.totalDeadAndMissing)}
-          >
-          <title>{d.totalDeadAndMissing}</title>
-          </rect>
-        ))
-      }
+      <g transform={`translate(${margin.left}, ${margin.top})`}>
+
+        {xScale.ticks().map(tickValue => (
+          <g key={tickValue} transform={`translate(${xScale(tickValue)}, 0)`}>
+            <line y2={innerHeight} stroke="black" />
+            <text 
+              y={innerHeight+50}
+              textAnchor="middle"
+              dy="0.71em"
+            >{xAxisTickFormat(tickValue)}</text>
+          </g>
+        ))}
+        {yScale.ticks().map(tickValue => (
+          <g key={tickValue} transform={`translate(0, ${yScale(tickValue)})`}>
+            <line x2={innerWidth} stroke="black" />
+            <text
+              textAnchor="end"
+              dy="0.32em"
+              x={-3}
+            >{tickValue}</text>
+          </g>
+        ))}
+        {/* {
+          binnedData.map((d, i) => (
+            <rect
+              key={i}
+              x={xScale(d.x0)}
+              y={yScale(d.totalDeadAndMissing)}
+              width={xScale(d.x1) - xScale(d.x0)}
+              height={innerHeight - yScale(d.totalDeadAndMissing)}
+            >
+            <title>{d.totalDeadAndMissing}</title>
+            </rect>
+          ))
+        } */}
+      </g>
     </svg>
   )
 }
