@@ -7,7 +7,7 @@ const width = 960
 const margin = {
   top: 20,
   right: 20,
-  bottom: 20,
+  bottom: 40,
   left: 80
 }
 
@@ -22,7 +22,10 @@ function App() {
   const innerWidth = width - margin.left - margin.right
 
   const xValue = d => d['Reported Date']
+  const xAxisLabel = 'Time'
+
   const yValue = d => d['Total Dead and Missing']
+  const yAxisLabel = 'Total Dead and Missing'
 
   const xAxisTickFormat = timeFormat('%m/%d/%Y')
 
@@ -51,17 +54,22 @@ function App() {
   return (
     <svg width={width} height={height}>
       <g transform={`translate(${margin.left}, ${margin.top})`}>
-
         {xScale.ticks().map(tickValue => (
           <g key={tickValue} transform={`translate(${xScale(tickValue)}, 0)`}>
             <line y2={innerHeight} stroke="black" />
             <text 
-              y={innerHeight+50}
+              y={innerHeight+5}
               textAnchor="middle"
               dy="0.71em"
             >{xAxisTickFormat(tickValue)}</text>
           </g>
         ))}
+        <text
+          className="axis-label"
+          x={innerWidth/2}
+          y={innerHeight+40}
+          textAnchor="middle"
+        >{xAxisLabel}</text>
         {yScale.ticks().map(tickValue => (
           <g key={tickValue} transform={`translate(0, ${yScale(tickValue)})`}>
             <line x2={innerWidth} stroke="black" />
@@ -72,6 +80,11 @@ function App() {
             >{tickValue}</text>
           </g>
         ))}
+        <text
+          className="axis-label"
+          textAnchor="middle"
+          transform={`translate(-50, ${innerHeight/2}) rotate(-90)`}
+        >{yAxisLabel}</text>
         {/* {
           binnedData.map((d, i) => (
             <rect
