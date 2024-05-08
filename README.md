@@ -11,6 +11,7 @@
 - Used [D3 - bin()](https://d3js.org/d3-array/bin) from D3-Array to aggregate the dead and missing migrants based on the month of the year using D3 - timeMonths
 - Created corresponding xScale and yScale
 - Plotted the marks into bars
+- Added tooltip to provide information on the number of migrants went missing or dead in that particular month when the user hovers over the bar
 
 ## Tech Used
 
