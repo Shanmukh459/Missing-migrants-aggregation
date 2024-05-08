@@ -6,8 +6,8 @@ const width = 960
 
 const margin = {
   top: 20,
-  right: 20,
-  bottom: 40,
+  right: 40,
+  bottom: 80,
   left: 80
 }
 
@@ -55,8 +55,8 @@ function App() {
     <svg width={width} height={height}>
       <g transform={`translate(${margin.left}, ${margin.top})`}>
         {xScale.ticks().map(tickValue => (
-          <g key={tickValue} transform={`translate(${xScale(tickValue)}, 0)`}>
-            <line y2={innerHeight} stroke="black" />
+          <g className="ticks" key={tickValue} transform={`translate(${xScale(tickValue)}, 0)`}>
+            <line y2={innerHeight} />
             <text 
               y={innerHeight+5}
               textAnchor="middle"
@@ -67,12 +67,12 @@ function App() {
         <text
           className="axis-label"
           x={innerWidth/2}
-          y={innerHeight+40}
+          y={innerHeight+50}
           textAnchor="middle"
         >{xAxisLabel}</text>
         {yScale.ticks().map(tickValue => (
-          <g key={tickValue} transform={`translate(0, ${yScale(tickValue)})`}>
-            <line x2={innerWidth} stroke="black" />
+          <g className="ticks" key={tickValue} transform={`translate(0, ${yScale(tickValue)})`}>
+            <line x2={innerWidth} />
             <text
               textAnchor="end"
               dy="0.32em"
@@ -85,10 +85,11 @@ function App() {
           textAnchor="middle"
           transform={`translate(-50, ${innerHeight/2}) rotate(-90)`}
         >{yAxisLabel}</text>
-        {/* {
+        {
           binnedData.map((d, i) => (
             <rect
               key={i}
+              className="marks"
               x={xScale(d.x0)}
               y={yScale(d.totalDeadAndMissing)}
               width={xScale(d.x1) - xScale(d.x0)}
@@ -97,7 +98,7 @@ function App() {
             <title>{d.totalDeadAndMissing}</title>
             </rect>
           ))
-        } */}
+        }
       </g>
     </svg>
   )
