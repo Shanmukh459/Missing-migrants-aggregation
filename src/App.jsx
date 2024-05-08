@@ -2,6 +2,7 @@ import { bin, extent, max, scaleLinear, scaleTime, sum, timeFormat, timeMonths }
 import { useData } from "./useData"
 import { AxisLeft } from "./AxisLeft"
 import { AxisBottom } from "./AxisBottom"
+import { Marks } from "./Marks"
 
 const height = 500
 const width = 960
@@ -72,20 +73,7 @@ function App() {
           textAnchor="middle"
           transform={`translate(${-yAxisLabelOffset}, ${innerHeight/2}) rotate(-90)`}
         >{yAxisLabel}</text>
-        {
-          binnedData.map((d, i) => (
-            <rect
-              key={i}
-              className="marks"
-              x={xScale(d.x0)}
-              y={yScale(d.totalDeadAndMissing)}
-              width={xScale(d.x1) - xScale(d.x0)}
-              height={innerHeight - yScale(d.totalDeadAndMissing)}
-            >
-            <title>{d.totalDeadAndMissing}</title>
-            </rect>
-          ))
-        }
+        <Marks binnedData={binnedData} xScale={xScale} yScale={yScale} innerHeight={innerHeight} />
       </g>
     </svg>
   )
