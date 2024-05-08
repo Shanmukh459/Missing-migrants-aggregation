@@ -41,8 +41,6 @@ function App() {
       x1: array.x1
     }))
 
-  console.log(binnedData)
-
   const yScale = scaleLinear()
     .domain([0, max(binnedData, d => d.totalDeadAndMissing)])
     .range([0, innerHeight])
@@ -51,14 +49,15 @@ function App() {
   return (
     <svg width={width} height={height}>
       {
-        binnedData.map(d => (
+        binnedData.map((d, i) => (
           <rect
+            key={i}
             x={xScale(d.x0)}
             y={yScale(d.totalDeadAndMissing)}
             width={xScale(d.x1) - xScale(d.x0)}
             height={innerHeight - yScale(d.totalDeadAndMissing)}
           >
-
+          <title>{d.totalDeadAndMissing}</title>
           </rect>
         ))
       }
