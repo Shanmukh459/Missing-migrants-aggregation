@@ -1,8 +1,22 @@
-# React + Vite
+# Missing Migrants Aggregation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- This is project to analyse the missing migrants across different country borders.
+- The data is obtained from [Missing Migrants Project](https://missingmigrants.iom.int/downloads).
+- The result of this project is a bar graph which indicates the number of migrants dead or missing in a month from the year 2014 to 2019.
 
-Currently, two official plugins are available:
+## Steps involved in the project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Created a [GitHub gist](https://gist.github.com/Shanmukh459/4c248231ead6a0e01c9247afa4f57238) from the dataset.
+- Fetched the data from the gist.
+- Used [D3 - bin()](https://d3js.org/d3-array/bin) from D3-Array to aggregate the dead and missing migrants based on the month of the year using D3 - timeMonths
+- Created corresponding xScale and yScale
+- Plotted the marks into bars
+
+## Tech Used
+
+- React
+- D3
+
+## Screenshot
+
+
